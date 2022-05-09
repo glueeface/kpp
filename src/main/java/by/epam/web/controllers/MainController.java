@@ -66,23 +66,27 @@ public class MainController{
         Map<String, Object> result = new HashMap<>();
         List<Map<String, Object>> bodyList = new LinkedList<>();
         CalculableParameters currentElement = new CalculableParameters(data.number1, data.number2, data.number3, data.action);
+        List<Integer> resultList = new LinkedList<>();
         try {
             bodyList.add(copyLogic.calculateResult(currentElement));
+            resultList.add(data.number1);
+            resultList.add(data.number2);
+            resultList.add(data.number3);
             logger.info("Successfully postMapping");
         } catch (IllegalArgumentsException e) {
             logger.error("Error in postMapping");
         }
 
-       int sumResult = copyLogic.calculateSumOfResult(bodyList.get(0));
-//        int maxResult = copyLogic.findMaxOfResult(resultList);
-//        int minResult = copyLogic.findMinOfResult(resultList);
+        int sumResult = copyLogic.calculateSumOfResult(bodyList.get(0));
+        int maxResult = copyLogic.findMaxOfResult(resultList);
+        int minResult = copyLogic.findMinOfResult(resultList);
         result.put("data", bodyList);
         result.put("Sum", sumResult);
-//
-//        return new ResponseEntity<>(resultList + "\nSum: " + sumResult + "\nMax result: " +
-//                maxResult + "\nMin result: " + minResult, HttpStatus.OK);
-        // return new ResponseEntity<>(resultList, HttpStatus.OK);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+
+       return new ResponseEntity<>(resultList + "\nSum: " + sumResult + "\nMax result: " +
+               maxResult + "\nMin result: " + minResult, HttpStatus.OK);
+        //return new ResponseEntity<>(resultList, HttpStatus.OK);
+        //return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

@@ -62,17 +62,13 @@ public class CopyLogic {
         return sum;
     }
 
-//    public int getMinimumNumber(Map<String, Object> resultMap) {
-//        int min = 0;
-//        if (!resultList.isEmpty()) {
-//            min = resultList.stream().mapToInt(Integer::intValue).min().getAsInt();
-//        }
-//        if (!resultMap.isEmpty()) {
-//            min = resultMap.entrySet().stream()
-//                    .min(Map.Entry.comparingByValue(Integer::compareTo)).get();
-//        }
-//        return min;
-//    }
+    public int findMinOfResult(List<Integer> resultList) {
+        int min = 0;
+        if (!resultList.isEmpty()) {
+            min = resultList.stream().mapToInt(Integer::intValue).min().getAsInt();
+        }
+        return min;
+    }
 
     public int findMaxOfResult(List<Integer> resultList) {
         int max = 0;
