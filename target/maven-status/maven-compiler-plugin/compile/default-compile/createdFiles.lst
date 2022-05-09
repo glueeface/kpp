@@ -1,0 +1,9 @@
+by\epam\web\controllers\RequestCounterController.class
+by\epam\web\exeptions\IllegalArgumentsException.class
+by\epam\web\logic\CopyHash.class
+by\epam\web\counter\RequestCounter.class
+by\epam\web\entity\CalculableParameters.class
+by\epam\web\counter\Synchronization.class
+by\epam\web\controllers\MainController.class
+by\epam\web\WebServiceApplication.class
+by\epam\web\logic\CopyLogic.class
