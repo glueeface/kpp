@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Console;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -66,27 +63,24 @@ public class MainController{
         Map<String, Object> result = new HashMap<>();
         List<Map<String, Object>> bodyList = new LinkedList<>();
         CalculableParameters currentElement = new CalculableParameters(data.number1, data.number2, data.number3, data.action);
-        List<Integer> resultList = new LinkedList<>();
         try {
             bodyList.add(copyLogic.calculateResult(currentElement));
-            resultList.add(data.number1);
-            resultList.add(data.number2);
-            resultList.add(data.number3);
             logger.info("Successfully postMapping");
         } catch (IllegalArgumentsException e) {
             logger.error("Error in postMapping");
         }
 
-        int sumResult = copyLogic.calculateSumOfResult(bodyList.get(0));
-        int maxResult = copyLogic.findMaxOfResult(resultList);
-        int minResult = copyLogic.findMinOfResult(resultList);
-        result.put("data", bodyList);
-        result.put("Sum", sumResult);
+        List<Integer> resultList = new ArrayList<>();
+        resultList.add((int) bodyList.get(0).get("number1"));
+        resultList.add((int) bodyList.get(0).get("number2"));
+        resultList.add((int) bodyList.get(0).get("number3"));
 
-       return new ResponseEntity<>(resultList + "\nSum: " + sumResult + "\nMax result: " +
-               maxResult + "\nMin result: " + minResult, HttpStatus.OK);
-        //return new ResponseEntity<>(resultList, HttpStatus.OK);
-        //return new ResponseEntity<>(result, HttpStatus.OK);
+        result.put("Data", bodyList);
+        result.put("Average", copyLogic.getAverageNumber(resultList));
+        result.put("MaxNumber", copyLogic.getMaximumNumber(resultList));
+        result.put("MinNumber", copyLogic.getMinimumNumber(resultList));
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Null;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class CopyLogic {
@@ -48,33 +46,30 @@ public class CopyLogic {
             hashMap.addToMap(requestParameters, result_map);
             logger.info("add hashMap");
         }
-
         return result_map;
     }
 
-    public int calculateSumOfResult(Map<String, Object> resultMap) {
-        int sum = 0;
-        if (!resultMap.isEmpty()) {
-            sum += (int) resultMap.get("number1");
-            sum += (int) resultMap.get("number2");
-            sum += (int) resultMap.get("number3");
-        }
-        return sum;
-    }
-
-    public int findMinOfResult(List<Integer> resultList) {
-        int min = 0;
+    public double getAverageNumber(List<Integer> resultList) {
+        double average = 0;
         if (!resultList.isEmpty()) {
-            min = resultList.stream().mapToInt(Integer::intValue).min().getAsInt();
+            average = resultList.stream().mapToInt(Integer::intValue).average().getAsDouble();
         }
-        return min;
+        return average;
     }
 
-    public int findMaxOfResult(List<Integer> resultList) {
+    public int getMaximumNumber(List<Integer> resultList) {
         int max = 0;
         if (!resultList.isEmpty()) {
             max = resultList.stream().mapToInt(Integer::intValue).max().getAsInt();
         }
         return max;
+    }
+
+    public int getMinimumNumber(List<Integer> resultList) {
+        int min = 0;
+        if (!resultList.isEmpty()) {
+            min = resultList.stream().mapToInt(Integer::intValue).min().getAsInt();
+        }
+        return min;
     }
 }
